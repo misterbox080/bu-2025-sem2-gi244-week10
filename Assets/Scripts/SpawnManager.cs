@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject obstaclePrefab;
+    public GameObject[] obstaclePrefab;   // เปลี่ยนเป็น array
     public Vector3 spawnPos = new(25, 0, 0);
 
     public float startDelay = 2;
@@ -10,18 +10,17 @@ public class SpawnManager : MonoBehaviour
 
     private PlayerController playerController;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Instantiate(obstaclePrefab, new Vector3(25, 0, 0), obstaclePrefab.transform.rotation);
-
         InvokeRepeating(nameof(SpawnObstacle), startDelay, repeatRate);
 
-        GameObject.Find("Player").GetComponent<PlayerController>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>(); 
     }
 
     void SpawnObstacle()
     {
-        Instantiate(obstaclePrefab, spawnPos, obstaclePrefab.transform.rotation);
+        int index = Random.Range(0, obstaclePrefab.Length);  
+
+        Instantiate(obstaclePrefab[index], spawnPos, obstaclePrefab[index].transform.rotation);
     }
 }

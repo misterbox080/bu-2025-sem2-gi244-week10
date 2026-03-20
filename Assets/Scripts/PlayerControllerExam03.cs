@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerControllerExam03 : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float jumpForce;
     public float gravityModifier;
@@ -20,7 +20,6 @@ public class PlayerControllerExam03 : MonoBehaviour
     private AudioSource playerAudio;
 
     public bool gameOver = false;
-    public bool isDashing = false;
 
     void Awake()
     {
@@ -32,21 +31,14 @@ public class PlayerControllerExam03 : MonoBehaviour
     void Start()
     {
         Physics.gravity *= gravityModifier;
+
         jumpAction = InputSystem.actions.FindAction("Jump");
+
         gameOver = false;
     }
 
     void Update()
     {
-        if (Keyboard.current.leftShiftKey.isPressed && !gameOver)
-        {
-            isDashing = true;
-        }
-        else
-        {
-            isDashing = false;
-        }
-
         if (jumpAction.triggered && jumpCount < 2 && !gameOver)
         {
             rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
